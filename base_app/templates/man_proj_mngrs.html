@@ -1,9 +1,9 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% load static %}
 {% block content %}
 <style>
   
-  @media(max-width:61.938em) {
+  /* {% comment %} @media(max-width:61.938em) {
     .row h3{
       font-size: 17px;
     }
@@ -17,10 +17,10 @@
     .row h3{
       font-size: 15px;
     }
-  }
+  } {% endcomment %} */
 </style>
 <div class="row" style="margin: 30px;">
-  <h2 class="text-muted">Project Team</h2>
+  <h3 class="text-muted">Project Team</h3>
 </div>
 {% comment %} <div class="row" style="margin: 30px;">
   <h2 class="text-muted">Projects</h2>
@@ -82,7 +82,7 @@
     <div class="row " style="margin-top: 20px;">
       <div class="col-sm-6 grid-margin">
         <div class="card">
-          <a href="/app/man_proj_mangrs1" style="text-decoration: none; color: white;">
+          <a href="{% url 'MAN_proj_mangrs1' proj_det.id %}" style="text-decoration: none; color: white;">
             <div class="card-body">
               {% comment %} <h5>Project Managers</h5> {% endcomment %}
               <div class="row">
@@ -103,13 +103,13 @@
       </div>
       <div class="col-sm-6 grid-margin">
         <div class="card">
-          <a href="/app/man_proj_mangrs2" style="text-decoration: none; color: white;">
+          <a href="{% url 'MAN_proj_mangrs2' proj_det.id %}" style="text-decoration: none; color: white;">
           <div class="card-body">
             {% comment %} <h5>Completed Projects</h5> {% endcomment %}
             <div class="row">
               <div class="col-8 col-sm-12 col-xl-8 my-auto">
                 <div class="d-flex d-sm-block d-md-flex align-items-center">
-                  <h4 class="mb-0">Team Leaders</h4>
+                  <h4 class="mb-0">Project Teams</h4>
                   <!-- <p class="text-success ms-2 mb-0 font-weight-medium">+8.3%</p> -->
                 </div>
                 <!-- <h6 class="text-muted font-weight-normal"> 9.61% Since last month</h6> -->

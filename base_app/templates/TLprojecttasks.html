@@ -33,6 +33,8 @@
               <th scope="col" style="color:#6C7293;">Extension</th>
               <th scope="col" style="color:#6C7293;">Split Task</th>
               <th scope="col" style="color:#6C7293;">Project Details</th>
+              <th scope="col" style="color:#6C7293;">Status</th>
+              <th scope="col" style="color:#6C7293;">Work Acceptance Letter</th>
               <th scope="col" style="color:#6C7293;">Action</th>
               <th scope="col" style="color:#6C7293;">Submitted Date</th>
               <th scope="col" style="color:#6C7293;">Delay</th>
@@ -40,7 +42,8 @@
             </thead>
             <tbody id="myTable">
               {% for i in tasks %}
-
+              <form action="{% url 'TLwork' i.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %} 
               <tr>
                 <td style="color:white;">{{i.task}}</td>
 
@@ -81,11 +84,20 @@
                             </a>
                         </td>
                     {% endif %}
+                    <td>{% if i.workaccept == "0" %}
+                      <input type="file" name="work" required> 
+                    {% else %}
+                    <a href="{{i.workaccept.url}} " download="{{i.task}}">
+                      <div class="badge badge-outline-success">Download</div>
+                  </a>
+                    {% endif %}
+                    </td>
+                    <td> <button type="submit" class="btn btn-primary">Submit</button></td>
                     <td style="color: white;">{{i.submitted_date|date:'d-m-Y'}}</td>
               <td><div class="badge badge-outline-danger">{{i.delay}}</div></td>
                 
               </tr>
-
+</form>
               {% endfor %}
             </tbody>
         </table>

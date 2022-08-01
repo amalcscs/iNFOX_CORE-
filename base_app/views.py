@@ -4405,7 +4405,7 @@ def MAN_proj_list(request,id):
         else:
             return redirect('/')
         mem = user_registration.objects.filter(id=m_id)
-        project_details = project.objects.filter(department=id)
+        project_details = project.objects.filter(department_id=id)
         
         return render(request,'MAN_proj_list.html',{'proj_det':project_details,'mem':mem})
     else:
@@ -7134,6 +7134,13 @@ def TLprojects(request):
     else:
         return redirect('/')
 
+def TLwork(request,id):
+    if request.method == "POST":
+        n = project_taskassign.objects.get(id=id)
+        n.workaccept = request.FILES['work']
+        n.save()
+        return redirect("TLprojects")
+
 def tlprojecttasks(request,id):
     if 'tlid' in request.session:
         if request.session.has_key('tlid'):
@@ -8383,11 +8390,12 @@ def DEVtable(request, id):
     time = datetime.now()
     return render(request, 'DEVtable.html', {'dev': dev, 'devp': devp, 'time': time, 'teststatus': teststatus, 'testerstatus': testerstatus})
 
-def DEVworkacceptance(request,id):
+def DEVwork(request,id):
     if request.method == 'POST':
-        n = project_taskassign.objects.get(id=id)
-        n.workaccept = request.POST['workaccept']
-        n.save
+        new = project_taskassign.objects.get(id=id)
+        new.workaccept = request.FILES['work']
+       
+        new.save()
         return redirect("DEVprojects")
 
 def DEVtaskstatus(request, id):

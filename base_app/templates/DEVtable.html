@@ -22,7 +22,7 @@
               <th scope="col" style="color:#6C7293;">Extension</th>
               <th scope="col" style="color:#6C7293;">Project Details</th>
               <th scope="col" style="color:#6C7293;">Status</th>
-              <th scope="col" style="color:#6C7293;">Work Acceptance</th>
+              <th scope="col" style="color:#6C7293;">Work Acceptance Letter</th>
               <th scope="col" style="color:#6C7293;">Action</th>
               <th scope="col" style="color:#6C7293;">Submitted Date</th>
               <th scope="col" style="color:#6C7293;">Delay</th>
@@ -31,7 +31,7 @@
           <tbody id="myTable">
 
             {% for dp in devp %}
-            <form action="{% url 'DEVworkacceptance' dp.id %}" method="POST" enctype="multipart/form-data">
+            <form action="{% url 'DEVwork' dp.id %}" method="POST" enctype="multipart/form-data">
              {% csrf_token %} 
               <tr>
               <td style="color:white;">{{dp.task}}</td>
@@ -72,9 +72,11 @@
               </td>
               {% endif %}
               <td>{% if dp.workaccept == "0" %}
-                <input type="file" name="workaccept" required> 
+                <input type="file" name="work" required> 
               {% else %}
-              <button type="button" class="btn btn-primary">Download</button>
+              <a href="{{dp.workaccept.url}} " download="{{dp.task}}">
+                <div class="badge badge-outline-success">Download</div>
+            </a>
               {% endif %}
               </td>
               <td> <button type="submit" class="btn btn-primary">Submit</button></td>
