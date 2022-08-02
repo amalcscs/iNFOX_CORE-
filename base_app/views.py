@@ -4457,11 +4457,14 @@ def MAN_proj_mangrs2(request,id):
         else:
             return redirect('/')
         mem = user_registration.objects.filter(id=m_id)
+        user_det1=user_registration.objects.all()
         project_details = project.objects.get(id=id) 
         proj1=project_details.designation_id
         dept_id=project_details.department_id
-        user_det=user_registration.objects.filter(designation_id=proj1).order_by("-id")
-        return render(request,'MAN_proj_mangrs2.html',{'user_det':user_det,'proj_det':project_details,'mem':mem,'proj1':proj1})
+        des=designation.objects.get(designation="team leader")
+        user_det=user_registration.objects.filter(designation_id=des.id)
+        projtask = project_taskassign.objects.filter(project_id=project_details)
+        return render(request,'MAN_proj_mangrs2.html',{'user_det1':user_det1,'projtask':projtask,'user_det':user_det,'proj_det':project_details,'mem':mem,'proj1':proj1})
     else:
         return redirect('/')
 
@@ -4474,7 +4477,7 @@ def MAN_daily_report(request,id):
         mem = user_registration.objects.filter(id=m_id)
         proj_name =  project_taskassign.objects.all()
         tester_name = user_registration.objects.all()
-        tester = tester_status.objects.filter(user_id=id)
+        tester = test_status.objects.all()
         return render(request,'MAN_daily_report.html',{'proj_name':proj_name,'test':tester,'mem':mem,'tester_name':tester_name})
     else:
         return redirect('/')
@@ -4486,11 +4489,14 @@ def MAN_developers(request,id):
         else:
             return redirect('/')
         mem = user_registration.objects.filter(id=m_id)
-        project_details = project.objects.filter(id=id) 
-        project_task = project_taskassign.objects.filter(project_id = project_details).filter(tl_id = id)
+        project_details = project.objects.all()
+        print(id)
         user_det=user_registration.objects.filter(tl_id=id).order_by("-id")
         progress_bar= tester_status.objects.all()
-        return render(request,'MAN_developers.html',{'user_det':user_det,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'mem':mem})
+        des = designation.objects.get(designation="developer")
+        user =user_registration.objects.all()
+        project_task = project_taskassign.objects.filter(id=id)
+        return render(request,'MAN_developers.html',{'user':user,'user_det':user_det,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'mem':mem})
     else:
         return redirect('/')
 

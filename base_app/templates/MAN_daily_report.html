@@ -1,4 +1,4 @@
-{% extends 'index.html' %}
+{% extends 'MAN_index.html' %}
 {% load static %}
 {% block content %}
 <!DOCTYPE html>
@@ -31,79 +31,37 @@
                   <thead>
                     <tr>
                       <th> Date </th>
-                      <th> ReportBy </th>
-                      <th> Task </th>
+                      <!-- <th> ReportBy </th> -->
                       <th> SubTask </th>
                       <th> Work Done </th>
                       <th> Files </th>
+                      <th> Gitlink </th>
                     </tr>
                   </thead>
                   <tbody>
+                    {% for i in test %}
                     <tr>
                       <td>
-                        02 Jan 2022
+                        {{i.date|date:'d-m-Y'}}
                       </td>
-                      <td> Herman Beck </td>
                       <td>
-                        Manager Module
+                        {% for j in proj_name %}
+                        {% if i.subtask_id == j.id %}
+                        {{j.subtask}}
+                        {% endif %}
+                        {% endfor %}
                       </td>
-                      <td> Project Module </td>
-                      <td> On Progress </td>
+                      <td> {{i.workdone}}</td>
+                      <td><a href="{{i.json_testerscreenshot.url}} " download="{{i.workdone}}">
+                        <div class="badge badge-outline-success">Download</div>
+                    </a> </td>
                       <td>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Download</button>
-                        </div>
+                        <a href="{{i.git_link.url}} " download="{{i.git_link}}">
+                          <div class="badge badge-outline-success">Download</div>
+                      </a> 
                         </td>
                     </tr>
-                    <tr>
-                      <td>
-                        14 Jan 2022
-                      </td>
-                      <td> Messsy Adam </td>
-                      <td>
-                        Manager Module
-                      </td>
-                      <td> Dashboard </td>
-                      <td> On Progress </td>
-                      <td>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Download</button>
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        21 Jan 2022
-                      </td>
-                      <td> John Richards </td>
-                      <td>
-                        Manager Module
-                      </td>
-                      <td> Reported Issues </td>
-                      <td> On Progress </td>
-                      <td>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Download</button>
-                        </div>
-                        </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        30 Jan 2022
-                      </td>
-                      <td> Peter Meggik </td>
-                      <td>
-                        Manager Module
-                      </td>
-                      <td> Attendance </td>
-                      <td> Completed </td>
-                      <td>
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-primary">Download</button>
-                        </div>
-                        </td>
-                    </tr>
-                    
+                    {% endfor %}
                   </tbody>
                 </table>
               </div>

@@ -42,27 +42,43 @@
                     <tr>
                      
                       <th> Name </th>
-                      <th> Employee ID </th>
                       <th> Start Date </th>
                       <th> End Date </th>
                       <th> Submission Date </th>
-                      <th> Progress </th>
+                      <!-- <th> Progress </th> -->
                       <th> Work Acceptance Letter </th>
                       <th> Delay </th>
                      
                     </tr>
                   </thead>
                   <tbody>
-                       {% for i in user_det %}
-                   
+                       {% for i in projtask %}
+                       {% for j in user_det1 %}
+                       {% if i.tl_id == j.id %}
                     <tr data-href="{% url 'MAN_developers' i.id  %}">
                         
-                        <td> {{i.fullname}}</td>
-                        <td> {{i.employee_id}} </td>
-                        <td> </td>
-                        <td> </td>
+                        <td> 
+                          
+                          {{j.fullname}}
+                        
+                        
+                        </td>
+                        <td>{{i.startdate|date:'d-m-Y'}} </td>
+                        <td>{{i.enddate|date:'d-m-Y'}} </td>
+                        <td>{{i.submitted_date|date:'d-m-Y'}} </td>
+                        <td>{% if i.workaccept == "0" %}
+                          <div class="badge badge-outline-primary">Pending</div>
+                        {% else %}
+                        <a href="{{i.workaccept.url}} " download="{{i.fullname}}">
+                          <div class="badge badge-outline-success">Download</div>
+                      </a>
+                        {% endif %}
+                        </td>
+                        <td><div class="badge badge-outline-danger">{{i.delay}}</div></td>
+                        
                       </tr>
-                    
+                      {% endif %}
+                      {% endfor %}
                    
                 {% endfor %}
                     <!-- <tr onclick="window.location='/base_app/MAN_developers' ">
