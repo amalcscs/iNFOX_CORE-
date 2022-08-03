@@ -531,7 +531,7 @@ urlpatterns = [
             views.BRadmin_TL_dailyreport, name='BRadmin_TL_dailyreport'),
     re_path(r'^BRadmin_developers/(?P<id>\d+)/$',
             views.BRadmin_developers, name='BRadmin_developers'),
-
+    
 
     # completed projects-subeeesh -admin mod
 
@@ -790,6 +790,7 @@ urlpatterns = [
     re_path(r'^projectmanager_completedetail/(?P<id>\d+)/$', views.projectmanager_completedetail, name='projectmanager_completedetail'), 
     re_path(r'^projectmanager_completeteam/(?P<id>\d+)/$', views.projectmanager_completeteam, name='projectmanager_completeteam'),
     re_path(r'^projectmanager_teaminvolved/(?P<id>\d+)/$', views.projectmanager_teaminvolved, name='projectmanager_teaminvolved'),
+    re_path(r'^projectmanager_developerinvolved/(?P<id>\d+)/$', views.projectmanager_developerinvolved, name='projectmanager_developerinvolved'),
     re_path(r'^projectmanager_devteam/(?P<id>\d+)/$', views.projectmanager_devteam, name='projectmanager_devteam'),
 
     re_path(r'^projectmanager_currentteam/(?P<id>\d+)/$', views.projectmanager_currentteam, name='projectmanager_currentteam'),

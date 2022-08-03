@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
+    <!-- <style>
       .progress {
       
         background-color: #f1f1f1;
@@ -38,7 +38,7 @@ for (i = 0; i < progressBars.length; i++) {
 }
 });
 
-    </script>
+    </script> -->
   </head>
   <body>
     {% comment %} <div class="content-wrapper">     {% endcomment %}
@@ -61,6 +61,7 @@ for (i = 0; i < progressBars.length; i++) {
                       <th> Submission Date </th>
                       <!-- <th> Progress </th> -->
                       <th> Work Acceptance Letter </th>
+                      <th>Progress</th>
                       <th> Delay </th>
                       <th> Report </th>
                     </tr>
@@ -86,6 +87,13 @@ for (i = 0; i < progressBars.length; i++) {
                       <div class="badge badge-outline-success">Download</div>
                   </a>
                     {% endif %}
+                    </td>
+                    <td>
+                
+                      <div class="progress" data-toggle="modal" data-target=""
+                        style="border-radius:5px;height:20px;background-color:#C2F0EB">
+                        <div class="progress-bar" style="height:20px;width:{{i.progress}}%">{{i.progress}}%</div>
+                      </div>
                     </td>
                     <td><div class="badge badge-outline-danger">{{i.delay}}</div></td>
                     <td>
@@ -182,7 +190,7 @@ for (i = 0; i < progressBars.length; i++) {
     {% comment %} </div> {% endcomment %}
   </body>
 </html>
-
+<!-- 
 <script>
   $(document).ready(function () {
   const show_percent = true;
@@ -206,5 +214,5 @@ for (i = 0; i < progressBars.length; i++) {
   }
 });
 
-</script>
+</script> -->
 {% endblock%}

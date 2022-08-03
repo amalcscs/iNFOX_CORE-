@@ -4413,7 +4413,8 @@ def MAN_projects(request,id):
         else:
             return redirect('/')
         mem = user_registration.objects.filter(id=m_id)
-        Num= project.objects.filter(status='accepted').filter(department=id).count()
+        # Num= project.objects.filter(status='accepted').filter(department=id).count()
+        Num= project.objects.filter(~Q(status='Completed'),~Q(status='Rejected')).filter(department=id).count()
         num= project.objects.filter(status='completed').filter(department=id).count()
         project_details = project.objects.all()
         depart =department.objects.get(id=id)
@@ -6468,8 +6469,20 @@ def projectmanager_teaminvolved(request, id):
         else:
            return redirect('/')
         pro = user_registration.objects.filter(id=prid)
-        pri = project_taskassign.objects.filter(developer_id=id).order_by("-id")
+        pri = project_taskassign.objects.filter(teamleader_id=id).order_by("-id")
         return render(request, 'projectmanager_teaminvolved.html',{'pro': pro, 'pri': pri})
+    else:
+        return redirect('/')
+
+def projectmanager_developerinvolved(request, id):
+    if 'prid' in request.session:
+        if request.session.has_key('prid'):
+            prid = request.session['prid']
+        else:
+           return redirect('/')
+        pro = user_registration.objects.filter(id=prid)
+        pri = project_taskassign.objects.filter(developer_id=id).order_by("-id")
+        return render(request, 'projectmanager_developerinvolved.html',{'pro': pro, 'pri': pri})
     else:
         return redirect('/')
 

@@ -24,6 +24,7 @@
                 <th>Start Date</th>
                 <th>End Date</th>
                 <th>Submission Date</th>
+                <th>Work Acceptance Letter</th>
                 <th>Git Link</th>
                 <th>TL Status</th>
                 <th>Developer Status</th>
@@ -52,6 +53,15 @@
                 {% else %}
                 <td>{{i.submitted_date|date:"d-m-Y"}}</td>
                 {%endif%}
+
+                <td>{% if i.workaccept == "0" %}
+                  <div class="badge badge-outline-primary">Pending</div>
+                {% else %}
+                <a href="{{i.workaccept.url}} " download="{{i.fullname}}">
+                  <div class="badge badge-outline-success">Download</div>
+              </a>
+                {% endif %}
+                </td>
                 <td><a href="{{i.git_link}}" target="_blank" style="text-decoration: none;">
                     <div class="badge badge-outline-success">Link</div>
                   </a></td>
