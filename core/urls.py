@@ -527,6 +527,8 @@ urlpatterns = [
             views.BRadmin_proj_mangrs2, name='BRadmin_proj_mangrs2'),
     re_path(r'^BRadmin_daily_report/(?P<id>\d+)/$',
             views.BRadmin_daily_report, name='BRadmin_daily_report'),
+    re_path(r'^BRadmin_TL_dailyreport/(?P<id>\d+)/$',
+            views.BRadmin_TL_dailyreport, name='BRadmin_TL_dailyreport'),
     re_path(r'^BRadmin_developers/(?P<id>\d+)/$',
             views.BRadmin_developers, name='BRadmin_developers'),
 
@@ -567,6 +569,8 @@ urlpatterns = [
             views.MAN_proj_mangrs2, name='MAN_proj_mangrs2'),
     re_path(r'^MAN_daily_report/(?P<id>\d+)/$',
             views.MAN_daily_report, name='MAN_daily_report'),
+    re_path(r'^MAN_TL_dailyreport/(?P<id>\d+)/$',
+            views.MAN_TL_dailyreport, name='MAN_TL_dailyreport'),
     re_path(r'^MAN_developers/(?P<id>\d+)/$',
             views.MAN_developers, name='MAN_developers'),
 

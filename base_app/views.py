@@ -4216,11 +4216,32 @@ def BRadmin_proj_mangrs2(request,id):
         else:
             return redirect('/')
         Adm = user_registration.objects.filter(id=Adm_id)
-        project_details = project_taskassign.objects.filter(project_id=id)
+        # project_details = project_taskassign.objects.filter(project_id=id)
+        user_det1=user_registration.objects.all()
+        project_details = project.objects.get(id=id) 
+        proj1=project_details.designation_id
+        dept_id=project_details.department_id
+        des=designation.objects.get(designation="team leader")
+        user_det=user_registration.objects.filter(designation_id=des.id)
+        projtask = project_taskassign.objects.filter(project_id=project_details)
         # proj1=project_details.designation_id
         # dept_id=project_details.department_id
         # user_det=user_registration.objects.filter(designation_id=proj1).order_by("-id")
-        return render(request,'BRadmin_proj_mangrs2.html',{'project_details':project_details,'Adm':Adm})
+        return render(request,'BRadmin_proj_mangrs2.html',{'projtask':projtask,'user_det':user_det,'user_det1':user_det1,'proj1':proj1,'dept_id':dept_id,'project_details':project_details,'Adm':Adm})
+    else:
+        return redirect('/')
+
+def BRadmin_TL_dailyreport(request,id): 
+    if 'Adm_id' in request.session:
+        if request.session.has_key('Adm_id'):
+            Adm_id = request.session['Adm_id']
+        else:
+            return redirect('/')
+        Adm = user_registration.objects.filter(id=Adm_id)
+        proj_name =  project_taskassign.objects.all()
+        tester_name = user_registration.objects.all()
+        tester = test_status.objects.filter(user_id=id)
+        return render(request,'BRadmin_TL_dailyreport.html',{'proj_name':proj_name,'test':tester,'Adm':Adm,'tester_name':tester_name})
     else:
         return redirect('/')
 
@@ -4233,7 +4254,7 @@ def BRadmin_daily_report(request,id):
         Adm = user_registration.objects.filter(id=Adm_id) 
         proj_name =  project_taskassign.objects.all()
         tester_name = user_registration.objects.all()
-        tester = tester_status.objects.filter(user_id=id)
+        tester = test_status.objects.filter(subtask_id=id)
         return render(request,'BRadmin_daily_report.html',{'Adm':Adm,'test':tester, 'tester_name':tester_name, 'proj_name':proj_name})
     else:
         return redirect('/')
@@ -4245,11 +4266,14 @@ def BRadmin_developers(request,id):
         else:
             return redirect('/')
         Adm = user_registration.objects.filter(id=Adm_id)
-        project_details = project.objects.filter(id=id)
-        project_task = project_taskassign.objects.filter(project_id = project_details).filter(tl_id=id)
-        user_det=user_registration.objects.filter(tl_id=id).order_by("-id")
+        project_details = project.objects.all()
+        des = designation.objects.get(designation="developer")
+        user =user_registration.objects.all()
+        # project_task = project_taskassign.objects.filter(tl_id = project_details).filter(tl_id=id)
+        # user_det=user_registration.objects.filter(tl_id=id).order_by("-id")
         progress_bar= tester_status.objects.all()
-        return render(request,'BRadmin_developers.html',{'Adm':Adm,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'user_det':user_det})
+        project_task = project_taskassign.objects.filter(project_id=id)
+        return render(request,'BRadmin_developers.html',{'user':user,'Adm':Adm,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar})
     else:
         return redirect('/')
 
@@ -4468,6 +4492,21 @@ def MAN_proj_mangrs2(request,id):
     else:
         return redirect('/')
 
+def MAN_TL_dailyreport(request,id): 
+    if 'm_id' in request.session:
+        if request.session.has_key('m_id'):
+            m_id = request.session['m_id']
+        else:
+            return redirect('/')
+        mem = user_registration.objects.filter(id=m_id)
+        proj_name =  project_taskassign.objects.all()
+        tester_name = user_registration.objects.all()
+        tester = test_status.objects.filter(user_id=id)
+        return render(request,'MAN_TL_dailyreport.html',{'proj_name':proj_name,'test':tester,'mem':mem,'tester_name':tester_name})
+    else:
+        return redirect('/')
+
+
 def MAN_daily_report(request,id): 
     if 'm_id' in request.session:
         if request.session.has_key('m_id'):
@@ -4477,7 +4516,7 @@ def MAN_daily_report(request,id):
         mem = user_registration.objects.filter(id=m_id)
         proj_name =  project_taskassign.objects.all()
         tester_name = user_registration.objects.all()
-        tester = test_status.objects.all()
+        tester = test_status.objects.filter(subtask_id=id)
         return render(request,'MAN_daily_report.html',{'proj_name':proj_name,'test':tester,'mem':mem,'tester_name':tester_name})
     else:
         return redirect('/')
@@ -4495,7 +4534,7 @@ def MAN_developers(request,id):
         progress_bar= tester_status.objects.all()
         des = designation.objects.get(designation="developer")
         user =user_registration.objects.all()
-        project_task = project_taskassign.objects.filter(id=id)
+        project_task = project_taskassign.objects.filter(project_id=id)
         return render(request,'MAN_developers.html',{'user':user,'user_det':user_det,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'mem':mem})
     else:
         return redirect('/')
@@ -5734,7 +5773,7 @@ def projectmanager_assignproject(request):
             var = project_taskassign()
            
             var.user_id = prid
-            var.tl_id = request.POST['pname']
+            var.teamleader_id = request.POST['pname']
             var.task = request.POST['task']
             var.description=request.POST.get('desc')
             var.startdate=request.POST.get('sdate')
@@ -5748,7 +5787,7 @@ def projectmanager_assignproject(request):
                 
             var.project_id = request.POST.get('yyy')
 
-            var.developer_id= request.POST['pname']
+            # var.developer_id= request.POST['pname']
             var.tester_id= request.POST['tname']
 
             var.save()
@@ -7135,7 +7174,7 @@ def TLprojects(request):
             return redirect('/')
         mem = user_registration.objects.filter(id=tlid)
         display1 = project.objects.all()
-        display=project_taskassign.objects.filter(developer_id=tlid).values('project_id').distinct()
+        display=project_taskassign.objects.filter(teamleader_id=tlid).values('project_id').distinct()
         return render(request, 'TLprojects.html',{'display':display,'mem':mem,'display1':display1})
     else:
         return redirect('/')
@@ -7191,8 +7230,8 @@ def tlprojecttasks(request,id):
             mem2 = tester_status.objects.filter(tester_id=tlid)
             time=datetime.now()
             taskstatus = test_status.objects.all()
-            display = project_taskassign.objects.filter(developer_id=tlid).filter(project_id=id)
-            tasks = project_taskassign.objects.filter(project_id=id,developer_id = tlid)
+            display = project_taskassign.objects.filter(teamleader_id=tlid).filter(project_id=id)
+            tasks = project_taskassign.objects.filter(project_id=id,teamleader_id = tlid)
             mem3 = user_registration.objects.get(id=tlid)
             display1=mem3.fullname
            
@@ -7307,7 +7346,7 @@ def tlgivetask(request):
         spa = user_registration.objects.filter(tl_id=dept_id.id, status="active")
         spa1 = user_registration.objects.filter(designation_id=e1, status="active")
         time=datetime.now().date()
-        tasks = project_taskassign.objects.filter(developer_id=tlid,project_id=splitid).values('task').distinct()
+        tasks = project_taskassign.objects.filter(teamleader_id=tlid,project_id=splitid).values('task').distinct()
         new = project.objects.get(id=splitid)
         
         if request.method =='POST':

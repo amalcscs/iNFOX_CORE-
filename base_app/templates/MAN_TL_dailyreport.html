@@ -1,4 +1,4 @@
-{% extends 'BRadmin_index.html' %}
+{% extends 'MAN_index.html' %}
 {% load static %}
 {% block content %}
 <!DOCTYPE html>
@@ -46,8 +46,8 @@
                       </td>
                       <td>
                         {% for j in proj_name %}
-                        {% if i.subtask_id == j.id %}
-                        {{j.subtask}}
+                        {% if i.user_id == j.teamleader_id %}
+                        {{j.task}}
                         {% endif %}
                         {% endfor %}
                       </td>

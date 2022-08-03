@@ -15,26 +15,30 @@
       </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-      
-      function myFunction() {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("myInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-        for (i = 0; i < tr.length; i++) {
-          td = tr[i].getElementsByTagName("td")[0];
-          if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-              tr[i].style.display = "";
-            } else {
-        tr[i].style.display = "none";
-      }
-    }       
+      $(document).ready(function () {
+const show_percent = true;
+var progressBars = $(".progress-bar");
+for (i = 0; i < progressBars.length; i++) {
+  var progress = $(progressBars[i]).attr("aria-valuenow");
+  $(progressBars[i]).width(progress + "%");
+  if (show_percent) {
+    $(progressBars[i]).text(progress + "%");
+  }
+  if (progress >= "75" ) {
+    //90 and above
+    $(progressBars[i]).addClass("bg-success");
+  } else if (progress >= "25" && progress < "75") {
+    $(progressBars[i]).addClass("bg-warning"); //From 30 to 44
+  } else if (progress == "100" ) {
+    $(progressBars[i]).addClass("bg-success");
+  } else {
+    //29 and under
+    $(progressBars[i]).addClass("bg-danger");
   }
 }
-</script>
+});
+
+    </script>
   </head>
   <body>
     {% comment %} <div class="content-wrapper">     {% endcomment %}
@@ -52,18 +56,48 @@
                     <tr>
                       
                       <th> Name </th>
-                      <th> Employee ID </th>
-                      <th> Mail </th>
-                      <th> Contact </th>
-                      <th> Progress </th>
-                      <th>  </th>
+                      <th> Start Date </th>
+                      <th> End Date </th>
+                      <th> Submission Date </th>
+                      <!-- <th> Progress </th> -->
+                      <th> Work Acceptance Letter </th>
+                      <th> Delay </th>
+                      <th> Report </th>
                     </tr>
                   </thead>
                   <tbody>
                     
-                    {% for i in user_det %}
-                       
-                    <tr>
+                    {% for i in proj_task %}
+                    {% for j in user %}
+                    {% if i.developer_id == j.id %}
+                       <tr>
+                    <td> 
+                          
+                      {{j.fullname}}
+                     
+                    </td>
+                    <td>{{i.startdate|date:'d-m-Y'}} </td>
+                    <td>{{i.enddate|date:'d-m-Y'}} </td>
+                    <td>{{i.submitted_date|date:'d-m-Y'}} </td>
+                    <td>{% if i.workaccept == "0" %}
+                      <div class="badge badge-outline-primary">Pending</div>
+                    {% else %}
+                    <a href="{{i.workaccept.url}} " download="{{i.fullname}}">
+                      <div class="badge badge-outline-success">Download</div>
+                  </a>
+                    {% endif %}
+                    </td>
+                    <td><div class="badge badge-outline-danger">{{i.delay}}</div></td>
+                    <td>
+                      <a href="{% url 'BRadmin_daily_report' i.id %}" style="text-decoration: none; color: white;"><div class="badge badge-outline-warning">Report</div></a>
+                      </td>
+                  </tr>
+                 
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+            
+                    <!-- <tr>
                       
                       <td> {{i.fullname}}</td>
                       <td> {{i.id}} </td>
@@ -79,14 +113,64 @@
                         {%  endfor %}
                     
                       </td>
-                      <td>
-                        <a href="{% url 'BRadmin_daily_report' i.id %}" style="text-decoration: none; color: white;"><div class="badge badge-outline-warning">Report</div></a>
-                        </td>
+                     
                     </tr>
                   
                    
-                    {%  endfor %}
+                   -->
                   
+                    
+                    <!-- <tr>
+                      <!-- <td>
+                       2
+                      </td>
+                      <td> Messsy Adam </td>
+                      <td> 12345 </td>
+                      <td> messyadam@gmail.com </td>
+                      <td> 9072563276 </td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </td>
+                      <td>
+                         <a href="/base_app/MAN_daily_report" style="text-decoration: none; color: white;"> <div class="badge badge-outline-warning">Report</div></a>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>
+                       3
+                      </td>
+                      <td> John Richards </td>
+                      <td> 12345 </td>
+                      <td> johnrichards@gmail.com </td>
+                      <td> 9072563276 </td>
+                      <td>
+                        <div class="progress">
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="/base_app/MAN_daily_report" style="text-decoration: none; color: white;"><div class="badge badge-outline-warning">Report</div></a>
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        4
+                      </td>
+                      <td> Peter Meggik </td>
+                      <td> 12345 </td>
+                      <td> petermeggik@gmail.com </td>
+                      <td> 9072563276 </td>
+                      <td> -->
+                        <!-- <div class="progress">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </td>
+                      <td>
+                        <a href="/base_app/MAN_daily_report" style="text-decoration: none; color: white;"><div class="badge badge-outline-warning">Report</div></a>
+                        </td>
+                    </tr> -->
                     
                   </tbody>
                 </table>
@@ -101,26 +185,25 @@
 
 <script>
   $(document).ready(function () {
-const show_percent = true;
-var progressBars = $(".progress-bar");
-for (i = 0; i < progressBars.length; i++) {
-var progress = $(progressBars[i]).attr("aria-valuenow");
-$(progressBars[i]).width(progress + "%");
-if (show_percent) {
-$(progressBars[i]).text(progress + "%");
-}
-if (progress >= "75" ) {
-//90 and above
-$(progressBars[i]).addClass("bg-success");
-} else if (progress >= "25" && progress < "75") {
-$(progressBars[i]).addClass("bg-warning"); //From 30 to 44
-} else if (progress == "100" ) {
-$(progressBars[i]).addClass("bg-success");
-} else {
-//29 and under
-$(progressBars[i]).addClass("bg-danger");
-}
-}
+  const show_percent = true;
+  var progressBars = $(".progress-bar");
+  for (i = 0; i < progressBars.length; i++) {
+    var progress = $(progressBars[i]).attr("aria-valuenow");
+    $(progressBars[i]).width(progress + "%");
+    if (show_percent) {
+      $(progressBars[i]).text(progress + "%");
+    }
+    if (progress >= "75") {
+      //90 and above
+      $(progressBars[i]).addClass("bg-success");
+    } else if (progress >= "25" && progress < "75") {
+      $(progressBars[i]).addClass("bg-warning"); //From 30 to 44
+    
+    } else {
+      //29 and under
+      $(progressBars[i]).addClass("bg-danger");
+    }
+  }
 });
 
 </script>

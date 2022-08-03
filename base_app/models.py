@@ -237,6 +237,8 @@ class project_taskassign(models.Model):
                              related_name='project_taskassignuser', null=True, blank=True)
     tl = models.ForeignKey(user_registration, on_delete=models.SET_NULL,
                            related_name='project_taskassigntl', null=True, blank=True)
+    teamleader = models.ForeignKey(user_registration, on_delete=models.SET_NULL,
+                           related_name='project_taskassignteamleader', null=True, blank=True)
     tester = models.ForeignKey(user_registration, on_delete=models.SET_NULL,
                                related_name='project_taskassign_tester', null=True, blank=True)
     description = models.TextField()

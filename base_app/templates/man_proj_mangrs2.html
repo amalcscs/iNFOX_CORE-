@@ -48,14 +48,16 @@
                       <!-- <th> Progress </th> -->
                       <th> Work Acceptance Letter </th>
                       <th> Delay </th>
+                      <th> Daily Report </th>
+                      <th> Developers </th>
                      
                     </tr>
                   </thead>
                   <tbody>
                        {% for i in projtask %}
                        {% for j in user_det1 %}
-                       {% if i.tl_id == j.id %}
-                    <tr data-href="{% url 'MAN_developers' i.id  %}">
+                       {% if i.teamleader_id == j.id %}
+                    <tr>
                         
                         <td> 
                           
@@ -75,7 +77,12 @@
                         {% endif %}
                         </td>
                         <td><div class="badge badge-outline-danger">{{i.delay}}</div></td>
-                        
+                        <td> <a href="{% url 'MAN_TL_dailyreport' j.id  %}" >
+                          <div class="badge badge-outline-warning">Report</div>
+                      </a></td>
+                        <td> <a href="{% url 'MAN_developers' j.id  %}" >
+                          <div class="badge badge-outline-secondary">Developers</div>
+                      </a></td>
                       </tr>
                       {% endif %}
                       {% endfor %}
@@ -122,12 +129,12 @@
     {% comment %} </div> {% endcomment %}
   </body>
 </html>
-<script>
+<!-- <script>
   $(document).ready(function() {
       $('table tr').click(function() {
           window.location = $(this).data('href');
           return false;
       });
   });
-</script>
+</script> -->
 {% endblock%}
