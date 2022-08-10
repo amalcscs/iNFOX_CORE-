@@ -268,7 +268,6 @@ class project_taskassign(models.Model):
     git_link = models.TextField(null=True,default='')
     workaccept = models.FileField(upload_to='images/', null=True, blank=True,default="0")
     
-
    
 
 class test_status(models.Model):

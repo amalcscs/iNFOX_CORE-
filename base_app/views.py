@@ -6392,6 +6392,7 @@ def projectmanager_currentdetail(request,id):
         return render(request, 'projectmanager_currentdetail.html',{'pro':pro,'display':display})
     else:
         return redirect('/')
+        
 def projectmanager_currentteam(request,id):
     if 'prid' in request.session:
         if request.session.has_key('prid'):
@@ -6400,7 +6401,7 @@ def projectmanager_currentteam(request,id):
             return redirect('/')
         pro = user_registration.objects.filter(id=prid)
         
-        display = project_taskassign.objects.filter(project_id=id).values('tl_id').distinct()
+        display = project_taskassign.objects.filter(project_id=id)
         
         uniq = user_registration.objects.all()
       
