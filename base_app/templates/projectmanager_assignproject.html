@@ -38,8 +38,18 @@
        print({{j.id}})
         {% endfor %}
       </select>  <br>
+      <label>Project Phase</label>
+      <select class="form-control" name="phases" id="" style='color:white !important'>
+        <option>
+          --select--
+        </option>
+        {% for g in phase %}
+        <option value="{{g.id}}">{{g.project_phase}}</option>
+       print({{g.id}})
+        {% endfor %}
+      </select>  <br>
       <label>Task</label>
-      <input type="text" class="form-control card-title col-12 md-4" name="task" autocomplete="off" required>
+      <input type="text" class="form-control card-title col-12 md-4" name="task" autocomplete="off" >
       <label>Description</label>
       <textarea type="text" name="desc" class="form-control card-title col-12 md-4" style='color:white !important;height: 100px;'></textarea>
       <label>Start date</label>

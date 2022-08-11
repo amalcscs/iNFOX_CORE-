@@ -20,7 +20,8 @@ class branch_registration(models.Model):
         return self.branch_name
 
 
-
+class Project_phase(models.Model):
+    project_phase = models.CharField(max_length=255,null=True, blank=True)
 
 
 class department(models.Model):
@@ -233,6 +234,8 @@ class project(models.Model):
 class project_taskassign(models.Model):
     project = models.ForeignKey(project, on_delete=models.SET_NULL,
                                 related_name='project_taskassignproject', null=True, blank=True)
+    projectphase = models.ForeignKey(Project_phase, on_delete=models.SET_NULL,
+                                related_name='project_taskassignprojectphase', null=True, blank=True)
     developer = models.ForeignKey(user_registration, on_delete=models.SET_NULL,
                              related_name='project_taskassignuser', null=True, blank=True)
     tl = models.ForeignKey(user_registration, on_delete=models.SET_NULL,
@@ -640,3 +643,6 @@ class income(models.Model):
     department = models.ForeignKey(department, on_delete=models.SET_NULL,related_name='accounts_department_name', null=True, blank=True)
     payment_head = models.ForeignKey(payment_head, on_delete=models.SET_NULL,related_name='accounts_payment_head', null=True, blank=True)
     pay_status = models.IntegerField(default=0)
+
+
+  

@@ -1,0 +1,49 @@
+{%extends 'promanagerindex.html'%}
+{%load static%}
+{%block content%}
+<div class="row">
+  <div class=" ml-5 " style="font-size: 20px;font-weight: 600;opacity: 0.9;color: #6c7293;">Project Phases</div>
+</div>
+<br>
+
+<div class="row">
+ 
+  <div class="col-sm-4 grid-margin">
+    <a href="{% url 'projectmanager_addprojectphase' %}" style="text-decoration: none;">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h4 class="mb-0" style="color: white;">Add Project Phase</h4>
+              </div>
+            </div>
+            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+              <i class="icon-lg mdi mdi mdi-plus text-success ms-auto"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-sm-4 grid-margin">
+    <a href="{% url 'projectmanager_viewprojectphase' %}" style="text-decoration: none;">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-8 col-sm-12 col-xl-8 my-auto">
+              <div class="d-flex d-sm-block d-md-flex align-items-center">
+                <h4 class="mb-0" style="color: white;">View Project Phases</h4>
+              </div>
+            </div>
+            <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+              <i class="icon-lg mdi mdi mdi-television text-primary ms-auto"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  </div>
+  {%endblock%}

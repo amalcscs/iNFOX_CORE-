@@ -1,0 +1,138 @@
+{%extends 'promanagerindex.html'%}
+{%load static%}
+{%block content%}
+
+
+<style>
+@media screen and (min-device-width: 1300px) and (max-device-width: 1560px){
+  .delete {
+    margin-left:90px !important;
+  }
+}
+@media screen and (min-device-width: 1160px) and (max-device-width: 1360px){
+  .delete {
+    margin-right:20px !important;
+  }
+}
+@media screen and (min-device-width: 1100px) and (max-device-width: 1300px){
+  .delete {
+    margin-left:60px !important;
+  }
+}
+@media screen and (min-device-width: 899px) and (max-device-width: 1099px){
+  .delete {
+    margin-left:40px !important;
+  }
+}
+@media screen and (min-device-width: 698px) and (max-device-width: 898px){
+  .delete {
+    margin-left:40px !important;
+  }
+}
+@media screen and (min-device-width: 375px) and (max-device-width: 575px){
+  .delete {
+   margin-left:390px !important;
+  
+  }
+  .edit {
+   margin-top:10px !important;
+  
+  }
+}
+@media screen and (min-device-width: 460px) and (max-device-width: 560px){
+  .delete {
+   margin-right:80px !important;
+  
+  }
+  
+}
+</style>
+
+
+<div class="row">
+  <div class="" style="font-size: 20px;font-weight: 600;opacity: 0.9;color: #6c7293;">Project Phases</div>
+</div>
+<br>
+
+<div class="row">
+
+  
+
+      {% for i in phases %}
+      
+
+      <div class="col-sm-4 grid-margin">
+        
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                  <div class="d-flex d-sm-block d-md-flex align-items-center">
+                    <h4 class="mb-0" style="color: white;">{{i.project_phase}}</h4>
+                  </div>
+                </div>
+                <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                  <i class="icon-lg mdi mdi mdi-meteor text-primary ms-auto"></i>
+                </div>
+              
+                  <div class="row buttons">
+                    <div class="col-sm-6 edit">
+                        <button type="button" class="btn btn-outline-warning " data-toggle="modal" data-target="#edits{{i.id}}">Edit</button>
+                    </div>
+                    
+                    <div class="col-sm-6">
+                      <a href="{% url 'projectmanager_deletephase' i.id %}">
+                        <button type="button" class="btn btn-outline-danger  delete">Delete</button>
+                      </a>
+                        <div class="one"></div>
+                    </div>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+      
+      </div>
+
+      {% endfor %}
+
+    </div>
+    
+
+    
+<!-- Modal -->
+
+{% for i in phases %}
+<form action="{% url 'projectmanager_editphase' i.id %}" method="post">
+  {% csrf_token %}
+
+
+
+
+<div class="modal fade " id="edits{{i.id}}">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content " style="background-color: #191c24;">
+      <div class="modal-header" style="border-bottom: 0 none;">
+        <h5 class="modal-title text-info">Tester status</h5>
+        <button type="button" class="close text-light" data-dismiss="modal" aria-label=""
+          style="background-color: #191c24;border:none;font-size: 20px;">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="row m-2">
+        <div class="col-sm-4">Phase</div>
+        <div class="col-sm-8">
+            <input type="text" name="phase" value="{{i.project_phase}}" class="form-control" required>
+        
+      </div>
+    </div>
+<center><button type="submit" class="btn btn-primary mt-5 mb-3">Update</button> </center>
+    
+    </div>
+  </div>
+</div>
+</form>
+
+{% endfor %}
+
+  {%endblock%}

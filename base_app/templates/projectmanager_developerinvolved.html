@@ -20,6 +20,7 @@
             <thead>
               <tr>
                 <th> Project Name </th>
+                <th> Project Phase </th>
                 <th> Start Date </th>
                 <th> End Date </th>
                 <th> Work Acceptance Letter </th>
@@ -31,6 +32,15 @@
               {% for i in pri%}
               <tr>
                 <td>{{i.project}}</td>
+                <td>
+                  {% for j in phase%}
+                  {% if i.projectphase_id == j.id %}
+                  
+                  {{j.project_phase}}
+                
+                {% endif %}
+                {% endfor %}
+              </td>
                 <td> {{i.startdate|date:'d-m-Y'}} </td>
                 <td> {{i.enddate|date:'d-m-Y'}} </td>
                 <td>{% if i.workaccept == "0" %}

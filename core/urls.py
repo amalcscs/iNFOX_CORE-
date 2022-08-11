@@ -1498,6 +1498,13 @@ re_path(r'^accounts_internship/', views.accounts_internship, name="accounts_inte
     re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
 
 
+    #new updation in project manager section- add project phases option
+    re_path(r'^projectmanager_project_phases/$', views.projectmanager_project_phases, name='projectmanager_project_phases'),
+    re_path(r'^projectmanager_addprojectphase/$', views.projectmanager_addprojectphase, name='projectmanager_addprojectphase'),
+    re_path(r'^projectmanager_viewprojectphase/$', views.projectmanager_viewprojectphase, name='projectmanager_viewprojectphase'),
+    re_path(r'^projectmanager_deletephase/(?P<id>\d+)/$', views.projectmanager_deletephase, name='projectmanager_deletephase'),
+    re_path(r'^projectmanager_editphase/(?P<id>\d+)/$', views.projectmanager_editphase, name='projectmanager_editphase'),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

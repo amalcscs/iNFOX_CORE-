@@ -33,8 +33,7 @@ from cal.models import *
 # Create your views here.
 def login(request):
     
-    
-    
+
     if request.method == 'POST':
         
         
@@ -5750,6 +5749,7 @@ def projectmanager_projects(request):
     else:
         return redirect('/')
 
+
 #nirmal
 def projectmanager_assignproject(request):
     if 'prid' in request.session:
@@ -5762,7 +5762,7 @@ def projectmanager_assignproject(request):
         desi_id = user_registration.objects.get(id=prid)
         d = designation.objects.get(designation="team leader")
         t = designation.objects.get(designation="tester")
-        
+        phase = Project_phase.objects.all()
         
         tes = user_registration.objects.filter(department_id = desi_id.department_id, designation_id= t.id)
         spa = user_registration.objects.filter(department_id = desi_id.department_id, designation_id= d.id)
@@ -5775,6 +5775,7 @@ def projectmanager_assignproject(request):
            
             var.user_id = prid
             var.teamleader_id = request.POST['pname']
+            var.projectphase_id = request.POST['phases']
             var.task = request.POST['task']
             var.description=request.POST.get('desc')
             var.startdate=request.POST.get('sdate')
@@ -5811,7 +5812,7 @@ def projectmanager_assignproject(request):
             msg_success = "Project assigned successfully"
             
             return render(request, 'projectmanager_assignproject.html',{'pro':pro,'spa':spa,'pvar':pvar,'tes':tes, 'msg_success':msg_success})
-        return render(request, 'projectmanager_assignproject.html', {'pro':pro,'spa':spa,'pvar':pvar,'tes':tes})
+        return render(request, 'projectmanager_assignproject.html', {'phase':phase,'pro':pro,'spa':spa,'pvar':pvar,'tes':tes})
     else:
         return redirect('/')
 
@@ -6470,8 +6471,9 @@ def projectmanager_teaminvolved(request, id):
         else:
            return redirect('/')
         pro = user_registration.objects.filter(id=prid)
+        phase = Project_phase.objects.all()
         pri = project_taskassign.objects.filter(teamleader_id=id).order_by("-id")
-        return render(request, 'projectmanager_teaminvolved.html',{'pro': pro, 'pri': pri})
+        return render(request, 'projectmanager_teaminvolved.html',{'phase':phase,'pro': pro, 'pri': pri})
     else:
         return redirect('/')
 
@@ -6483,7 +6485,8 @@ def projectmanager_developerinvolved(request, id):
            return redirect('/')
         pro = user_registration.objects.filter(id=prid)
         pri = project_taskassign.objects.filter(developer_id=id).order_by("-id")
-        return render(request, 'projectmanager_developerinvolved.html',{'pro': pro, 'pri': pri})
+        phase = Project_phase.objects.all()
+        return render(request, 'projectmanager_developerinvolved.html',{'phase':phase,'pro': pro, 'pri': pri})
     else:
         return redirect('/')
 
@@ -15979,3 +15982,55 @@ def tm_leave(request):
     tdate = request.GET.get('tdate')
     leaves = leave.objects.filter(user_id=emp,from_date__gte=fdate,to_date__lte=tdate)
     return render(request,'tm_leave.html', {'names':leaves})
+
+
+def projectmanager_project_phases(request):
+    if 'prid' in request.session:
+        if request.session.has_key('prid'):
+            prid = request.session['prid']
+        else:
+           return redirect('/')
+        pro = user_registration.objects.filter(id=prid)
+        return render(request, 'projectmanager_project_phases.html',{'pro':pro})
+    else:
+        return redirect('/')
+
+def projectmanager_addprojectphase(request):
+    if 'prid' in request.session:
+        if request.session.has_key('prid'):
+            prid = request.session['prid']
+        else:
+           return redirect('/')
+        pro = user_registration.objects.filter(id=prid)
+        if request.method=="POST":
+            n = Project_phase()
+            n.project_phase = request.POST['phase']
+            n.save()
+            messages.success(request, 'Success')
+        return render(request, 'projectmanager_addprojectphase.html',{'pro':pro})
+    else:
+        return redirect('/')
+
+def projectmanager_viewprojectphase(request):
+    if 'prid' in request.session:
+        if request.session.has_key('prid'):
+            prid = request.session['prid']
+        else:
+           return redirect('/')
+        pro = user_registration.objects.filter(id=prid)
+        phases = Project_phase.objects.all()
+        return render(request, 'projectmanager_viewprojectphase.html',{'pro':pro,'phases':phases})
+    else:
+        return redirect('/')
+
+def projectmanager_deletephase(request, id):
+    d = Project_phase.objects.filter(id=id)
+    d.delete()
+    return redirect('projectmanager_viewprojectphase')
+
+def projectmanager_editphase(request, id):
+    if request.method=="POST":
+        d = Project_phase.objects.get(id=id)
+        d.project_phase = request.POST['phase']
+        d.save()
+        return redirect('projectmanager_viewprojectphase')

@@ -30,11 +30,11 @@
                 <div class="col-8  col-sm-8 col-md-8 col-lg-8">
                     <div class="dropdown">
                         
-                        <select name="select" id=""  class=" badge  badge-outline bg-dark text-light" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();' required >
+                        <select name="select" id=""  class=" badge  badge-outline bg-dark text-light" onfocus='this.size=5;' onblur='this.size=1;' onchange='this.size=1; this.blur();'  >
                           {% for i in crt %}
                           <option style="display: none; " value="" >Select Team</option>
                           
-                          <option value="{{i.id}}" required>{{i.name}}  </option>
+                          <option value="{{i.id}}" >{{i.name}}  </option>
                           {% endfor %}
                           {% comment %} <option value="">Team Two</option>
                           <option value="">Team Two</option>
@@ -54,20 +54,20 @@
               <div class="form-group row">
                 <label for="exampleInputEmail2" class="col-4 col-sm-4 col-md-4 col-lg-4 col-form-label ">Topic</label>
                 <div class="col-8  col-sm-8 col-md-8 col-lg-8">
-                  <input type="text" name="topic" class="form-control text-light" id="" required>
+                  <input type="text" name="topic" class="form-control text-light" id="" >
                 </div>
               </div>
           
           <div class="form-group row">
             <label for="exampleInputEmail2" class="col-4 col-sm-4 col-md-4 col-lg-4 col-form-label">Start Date</label>
             <div class="col-8  col-sm-8 col-md-8 col-lg-8">
-              <input type="Date" name="start" class="form-control text-light" id="from" Required>
+              <input type="Date" name="start" class="form-control text-light" id="from" >
             </div>
           </div>
           <div class="form-group row">
             <label for="exampleInputMobile" class="col-4 col-sm-4 col-md-4 col-lg-4 col-form-label">End Date</label>
             <div class="col-8  col-sm-8 col-md-8 col-lg-8">
-                <input type="Date" name="end" class="form-control text-light" id="to" Required >
+                <input type="Date" name="end" class="form-control text-light" id="to"  >
             </div>
           </div><br><br>
           
@@ -88,7 +88,7 @@
 </div>
 
 
-<script language="javascript">
+<!-- <script language="javascript">
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
   var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -97,6 +97,6 @@
   today = yyyy + '-' + mm + '-' + dd;
   $('#from').attr('min',today);
   $('#to').attr('min',today);
-</script>
+</script> -->
 
 {%endblock%}
