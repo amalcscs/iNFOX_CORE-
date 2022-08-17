@@ -27,6 +27,7 @@
           <thead>
             <tr>
               <th scope="col" style="color:#6C7293;">Task name</th>
+              <th scope="col" style="color:#6C7293;">Project Phase</th>
               <th scope="col" style="color:#6C7293;">AssignedTo</th>
               <th scope="col" style="color:#6C7293;">Task Status</th>
               <th scope="col" style="color:#6C7293;">Test Status</th>
@@ -46,7 +47,15 @@
                 {% csrf_token %} 
               <tr>
                 <td style="color:white;">{{i.task}}</td>
-
+                <td style="color:white;">
+                  {% for j in phase%}
+                  {% if i.projectphase_id == j.id %}
+                  
+                  {{j.project_phase}}
+                
+                {% endif %}
+                {% endfor %}
+              </td>
                 <td style="color:white;">{{i.teamleader}}</td>
 
                 <td class="text-info"><a href="" data-toggle="modal" data-target="#taskstatus{{i.id}}"

@@ -4223,10 +4223,11 @@ def BRadmin_proj_mangrs2(request,id):
         des=designation.objects.get(designation="team leader")
         user_det=user_registration.objects.filter(designation_id=des.id)
         projtask = project_taskassign.objects.filter(project_id=project_details)
+        phase = Project_phase.objects.all()
         # proj1=project_details.designation_id
         # dept_id=project_details.department_id
         # user_det=user_registration.objects.filter(designation_id=proj1).order_by("-id")
-        return render(request,'BRadmin_proj_mangrs2.html',{'projtask':projtask,'user_det':user_det,'user_det1':user_det1,'proj1':proj1,'dept_id':dept_id,'project_details':project_details,'Adm':Adm})
+        return render(request,'BRadmin_proj_mangrs2.html',{'phase':phase,'projtask':projtask,'user_det':user_det,'user_det1':user_det1,'proj1':proj1,'dept_id':dept_id,'project_details':project_details,'Adm':Adm})
     else:
         return redirect('/')
 
@@ -4272,7 +4273,8 @@ def BRadmin_developers(request,id):
         # user_det=user_registration.objects.filter(tl_id=id).order_by("-id")
         progress_bar= tester_status.objects.all()
         project_task = project_taskassign.objects.filter(project_id=id)
-        return render(request,'BRadmin_developers.html',{'user':user,'Adm':Adm,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar})
+        phase = Project_phase.objects.all()
+        return render(request,'BRadmin_developers.html',{'phase':phase,'user':user,'Adm':Adm,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar})
     else:
         return redirect('/')
 
@@ -4488,7 +4490,8 @@ def MAN_proj_mangrs2(request,id):
         des=designation.objects.get(designation="team leader")
         user_det=user_registration.objects.filter(designation_id=des.id)
         projtask = project_taskassign.objects.filter(project_id=project_details)
-        return render(request,'MAN_proj_mangrs2.html',{'user_det1':user_det1,'projtask':projtask,'user_det':user_det,'proj_det':project_details,'mem':mem,'proj1':proj1})
+        phase = Project_phase.objects.all()
+        return render(request,'MAN_proj_mangrs2.html',{'phase':phase,'user_det1':user_det1,'projtask':projtask,'user_det':user_det,'proj_det':project_details,'mem':mem,'proj1':proj1})
     else:
         return redirect('/')
 
@@ -4535,7 +4538,8 @@ def MAN_developers(request,id):
         des = designation.objects.get(designation="developer")
         user =user_registration.objects.all()
         project_task = project_taskassign.objects.filter(project_id=id)
-        return render(request,'MAN_developers.html',{'user':user,'user_det':user_det,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'mem':mem})
+        phase = Project_phase.objects.all()
+        return render(request,'MAN_developers.html',{'phase':phase,'user':user,'user_det':user_det,'proj_task':project_task,'proj_det':project_details,'prog_status':progress_bar,'mem':mem})
     else:
         return redirect('/')
 
@@ -7251,8 +7255,8 @@ def tlprojecttasks(request,id):
             tasks = project_taskassign.objects.filter(project_id=id,teamleader_id = tlid)
             mem3 = user_registration.objects.get(id=tlid)
             display1=mem3.fullname
-           
-            return render(request, 'TLprojecttasks.html',{'display1':display1,'time':time,'display':display,'mem':mem,'mem1':mem1,'mem2':mem2,'taskstatus':taskstatus,'tasks':tasks})
+            phase = Project_phase.objects.all()
+            return render(request, 'TLprojecttasks.html',{'phase':phase,'display1':display1,'time':time,'display':display,'mem':mem,'mem1':mem1,'mem2':mem2,'taskstatus':taskstatus,'tasks':tasks})
     else:
         return redirect('/')
 
@@ -7340,9 +7344,10 @@ def tlsplittask(request,id):
             sub1 = project_taskassign.objects.get(id=id)
             test = test_status.objects.all()
             tester = tester_status.objects.all()
+            phase = Project_phase.objects.all()
             mem = user_registration.objects.filter(id=tlid)
             sub = project_taskassign.objects.filter(~Q(developer_id=tlid)).filter(project_id=splitid,tl_id=tlid) 
-            return render(request, 'TLsplittask.html',{'mem':mem,'sub':sub,'sub1':sub1,'test':test,'tester':tester})
+            return render(request, 'TLsplittask.html',{'phase':phase,'mem':mem,'sub':sub,'sub1':sub1,'test':test,'tester':tester})
         else:
             return redirect('/') 
 
@@ -8449,8 +8454,9 @@ def DEVtable(request, id):
     devp = project_taskassign.objects.filter(project_id=id).filter(developer_id=devid).order_by("-id")
     teststatus = test_status.objects.all()
     testerstatus = tester_status.objects.filter(project_id=id)
+    phase = Project_phase.objects.all()
     time = datetime.now()
-    return render(request, 'DEVtable.html', {'dev': dev, 'devp': devp, 'time': time, 'teststatus': teststatus, 'testerstatus': testerstatus})
+    return render(request, 'DEVtable.html', {'phase':phase,'dev': dev, 'devp': devp, 'time': time, 'teststatus': teststatus, 'testerstatus': testerstatus})
 
 def DEVwork(request,id):
     if request.method == 'POST':

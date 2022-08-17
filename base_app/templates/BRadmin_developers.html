@@ -56,6 +56,7 @@ for (i = 0; i < progressBars.length; i++) {
                     <tr>
                       
                       <th> Name </th>
+                      <th> Project Phase </th>
                       <th> Start Date </th>
                       <th> End Date </th>
                       <th> Submission Date </th>
@@ -77,6 +78,15 @@ for (i = 0; i < progressBars.length; i++) {
                       {{j.fullname}}
                      
                     </td>
+                    <td>
+                      {% for h in phase%}
+                      {% if i.projectphase_id == h.id %}
+                      
+                      {{h.project_phase}}
+                    
+                    {% endif %}
+                    {% endfor %}
+                  </td>
                     <td>{{i.startdate|date:'d-m-Y'}} </td>
                     <td>{{i.enddate|date:'d-m-Y'}} </td>
                     <td>{{i.submitted_date|date:'d-m-Y'}} </td>
